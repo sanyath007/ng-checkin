@@ -14,6 +14,35 @@
 		this.getUserInfo = (data) => {
 			return $http.get('http://web2.mnrh.com/api/get_userinfo.php?cid=' + data);
 		};
+
+		this.uploadPic = (data) => {
+			return $http.post('http://web2.mnrh.com/api/upload_image.php', data, {
+				transformRequest: angular.identity,
+				headers: {
+					'Content-Type': undefined
+				}
+			})
+		}
+	});
+
+	app.service('checkinService', function($http) {
+		this.checkin = (data) => {
+			return $http.post('http://web2.mnrh.com/api/checkin.php', data, {
+				transformRequest: angular.identity,
+				headers: {
+					'Content-Type': undefined
+				}
+			});
+		}
+
+		this.uploadPic = (data) => {
+			return $http.post('http://web2.mnrh.com/api/upload_image.php', data, {
+				transformRequest: angular.identity,
+				headers: {
+					'Content-Type': undefined
+				}
+			})
+		}
 	});
 
 	app.service('videoService', function($http) {		
@@ -28,7 +57,7 @@
 		};
 	});
 
-	app.controller('formController', ($scope, userService, videoService) => {
+	app.controller('formController', ($scope, userService, videoService, checkinService) => {
 		$scope.test = "Please check in your time. On " + moment().format('DD-MM-YY');
 		$scope.onCamera = false;
 		$scope.uploadImage = [];
@@ -46,8 +75,7 @@
 			audio: false
 		};
 
-		$scope.cameraStart = (event) => {
-			let track;
+		$scope.cameraStart = (event) => {			
 			$scope.onCamera = event.currentTarget.checked;
 
 			if($scope.onCamera) {
@@ -55,7 +83,7 @@
 				.then((stream) => {
 					window.localStream = stream;
 
-					track = stream.getTracks()[0];
+					let track = stream.getTracks()[0];
 					camera.srcObject = stream;
 				})
 				.catch((err) => {
@@ -82,27 +110,21 @@
 
 			/** Create data URL containing a representation of image */
 			$scope.uploadImage = c.toDataURL('image/png', 1.0);
-			// console.log($scope.uploadImage);
 	
 			/** Display blob to image element */
 			img.src = window.URL.createObjectURL(dataURItoBlob($scope.uploadImage));
 			
-			if($scope.cid == ''){
-				toastr.error('Please input your CID !!!');
+			if($scope.cid == '' || !$scope.onCamera){
+				toastr.error('Please input your CID and on the camera !!!');
+			} else {
+				userService.getUserInfo($scope.cid)
+				.then((res) => {
+					console.log(res);
+					$scope.person = res.data;
+				}, (err) => {
+					console.log(err);
+				});
 			}
-
-			console.log(localStream);
-			if(localStream){
-				toastr.error('Please input your CID !!!');
-			}
-
-			userService.getUserInfo($scope.cid)
-			.then((res) => {
-				console.log(res);
-				$scope.person = res.data;
-			}, (err) => {
-				console.log(err);
-			});
 		};
 
 		/** Upload file to server. */
@@ -114,17 +136,12 @@
 
 		    formData.append('file', imgBlob);
 
-			// $http.post('http://web2.mnrh.com/api/upload_image.php', formData, {
-			// 	transformRequest: angular.identity,
-			// 	headers: {
-			// 		'Content-Type': undefined
-			// 	}
-			// })
-			// .then((res) => {
-			// 	console.log('Success', res);
-			// }, (res) => {
-			// 	console.log('Error', res);
-			// });
+			checkinService.uploadPic(formData)
+			.then((res) => {
+				console.log('Success', res);
+			}, (res) => {
+				console.log('Error', res);
+			});
 		};
 
 		function dataURItoBlob(dataURI) {
@@ -140,7 +157,6 @@
 	        	type: mimeString
 	      	});
 	    }
-
 	});
 
 	app.directive("fileread", () => {
