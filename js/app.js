@@ -4,6 +4,7 @@
 	var app = angular.module('checkin', []);
 
 	app.constant('moment', moment);
+	app.constant('toastr', toastr);
 
 	app.factory('_', ['window', () => {
 		return window._;
@@ -15,11 +16,26 @@
 		};
 	});
 
-	app.controller('formController', ($scope, userService) => {
+	app.service('videoService', function($http) {		
+		this.openVideo = (constraints) => {
+			return navigator.mediaDevices.getUserMedia(constraints);
+		};
+
+		this.stopVideo = (stream) => {
+			stream.getTracks().forEach( (track) => {
+    			track.stop();
+			});
+		};
+	});
+
+	app.controller('formController', ($scope, userService, videoService) => {
 		$scope.test = "Please check in your time. On " + moment().format('DD-MM-YY');
+		$scope.onCamera = false;
 		$scope.uploadImage = [];
+		$scope.cid = '';
 		$scope.person = {};
 
+		const cameraStatus = document.getElementById('cameraStatus');
 		const camera = document.getElementById('camera');
 		// const input = document.getElementById('photo');
 		// const drawer = document.getElementById('drawer');
@@ -30,17 +46,25 @@
 			audio: false
 		};
 
-		$scope.cameraStart = () => {
-			navigator.mediaDevices.getUserMedia(constraints)
-			.then((stream) => {
-				console.log(stream);
+		$scope.cameraStart = (event) => {
+			let track;
+			$scope.onCamera = event.currentTarget.checked;
 
-				let track = stream.getTracks()[0];
-				camera.srcObject = stream;
-			})
-			.catch((err) => {
-				console.error("Oops. Something is broken.", err);
-			})
+			if($scope.onCamera) {
+				videoService.openVideo(constraints)
+				.then((stream) => {
+					window.localStream = stream;
+
+					track = stream.getTracks()[0];
+					camera.srcObject = stream;
+				})
+				.catch((err) => {
+					console.error(err);
+				});
+			} else {
+				/** stop both video and audio */
+				videoService.stopVideo(localStream);
+			}
 		};
 
 		$scope.drawOnCanvas = (event) => {
@@ -63,7 +87,16 @@
 			/** Display blob to image element */
 			img.src = window.URL.createObjectURL(dataURItoBlob($scope.uploadImage));
 			
-			userService.getUserInfo($scope.person.cid)
+			if($scope.cid == ''){
+				toastr.error('Please input your CID !!!');
+			}
+
+			console.log(localStream);
+			if(localStream){
+				toastr.error('Please input your CID !!!');
+			}
+
+			userService.getUserInfo($scope.cid)
 			.then((res) => {
 				console.log(res);
 				$scope.person = res.data;
