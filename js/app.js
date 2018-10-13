@@ -1,14 +1,27 @@
 (function () {
-	'use strict';
+	// 'use strict';
 
 	var app = angular.module('checkin', []);
 
-	app.controller('formController', ($scope, $http) => {
-		$scope.test = "Please check in your time.";
+	app.constant('moment', moment);
+
+	app.factory('_', ['window', () => {
+		return window._;
+	}]);
+
+	app.service('userService', function($http) {		
+		this.getUserInfo = (data) => {
+			return $http.get('http://web2.mnrh.com/api/get_userinfo.php?cid=' + data);
+		};
+	});
+
+	app.controller('formController', ($scope, userService) => {
+		$scope.test = "Please check in your time. On " + moment().format('DD-MM-YY');
 		$scope.uploadImage = [];
+		$scope.person = {};
 
 		const camera = document.getElementById('camera');
-		const input = document.getElementById('photo');
+		// const input = document.getElementById('photo');
 		// const drawer = document.getElementById('drawer');
 		const img = document.getElementById('displayImage');
 
@@ -49,6 +62,14 @@
 	
 			/** Display blob to image element */
 			img.src = window.URL.createObjectURL(dataURItoBlob($scope.uploadImage));
+			
+			userService.getUserInfo($scope.person.cid)
+			.then((res) => {
+				console.log(res);
+				$scope.person = res.data;
+			}, (err) => {
+				console.log(err);
+			});
 		};
 
 		/** Upload file to server. */
@@ -60,17 +81,17 @@
 
 		    formData.append('file', imgBlob);
 
-			$http.post('http://web2.mnrh.com/api/upload_image.php', formData, {
-				transformRequest: angular.identity,
-				headers: {
-					'Content-Type': undefined
-				}
-			})
-			.then((res) => {
-				console.log('Success', res);
-			}, (res) => {
-				console.log('Error', res);
-			});
+			// $http.post('http://web2.mnrh.com/api/upload_image.php', formData, {
+			// 	transformRequest: angular.identity,
+			// 	headers: {
+			// 		'Content-Type': undefined
+			// 	}
+			// })
+			// .then((res) => {
+			// 	console.log('Success', res);
+			// }, (res) => {
+			// 	console.log('Error', res);
+			// });
 		};
 
 		function dataURItoBlob(dataURI) {
