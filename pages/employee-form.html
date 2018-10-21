@@ -1,0 +1,72 @@
+<div class="container" ng-controller="EmployeeController" data-ng-init="getPositions()">
+
+	<ol class="breadcrumb">
+	  	<li><a href="#">หน้าหลัก</a></li>
+	  	<li><a href="#">ข้อมูลบุคลากร</a></li>
+	  	<li class="active">เพิ่มบุคลากร</li>
+	</ol>
+
+	<div class="page-header">
+  		<h2>{{ pageHeader }} <small>{{ pageTitle }}</small></h2>
+	</div>
+
+	<div class="row">
+		<div class="col-md-12">
+			<form>
+				<div class="form-group">
+					<label>เลข 13 หลัก</label>
+					<input type="text" ng-model="employee.cid" class="form-control">
+				</div>
+				<div class="form-group">
+					<label>คำนำหน้า</label>
+					<input type="text" ng-model="employee.prefix" class="form-control">
+				</div>
+				<div class="form-group">
+					<label>ชื่อ</label>
+					<input type="text" ng-model="employee.fname" class="form-control">
+				</div>
+				<div class="form-group">
+					<label>สกุล</label>
+					<input type="text" ng-model="employee.lname" class="form-control">
+				</div>
+				<div class="form-group">
+					<label>วันเกิด</label>
+					<input 	datetime-picker date-format="yyyy-MM-dd" date-only 
+							ng-model="employee.birthdate" 
+							class="form-control" />
+				</div>
+				<div class="form-group">
+					<label>เพศ</label>
+					<input type="radio" value="1" ng-model="employee.sex"> ชาย
+					<input type="radio" value="2" ng-model="employee.sex"> หญิง
+				</div>
+				<div class="form-group">
+					<label>ตำแหน่ง</label>
+					<select class="form-control" ng-model="employee.position">
+						<option ng-selected="position.id == employee.position" 
+								ng-repeat="position in positions" 
+								ng-value="position.id">
+							{{ position.position_name }}
+						</option>
+					</select>
+				</div>
+				<div class="form-group">
+					<label>ระดับตำแหน่ง</label>
+					<select class="form-control" ng-model="employee.level">
+						<option value="">ไม่ระบุ</option>
+						<option value="ปฏิบัติงาน">ปฏิบัติงาน</option>
+						<option value="ชำนาญงาน">ชำนาญงาน</option>
+						<option value="ปฏิบัติการ">ปฏิบัติการ</option>
+						<option value="ชำนาญการ">ชำนาญการ</option>
+						<option value="ชำนาญการพิเศษ">ชำนาญการพิเศษ</option>
+						<option value="เชี่ยวชาญ">เชี่ยวชาญ</option>
+						<option value="เชี่ยวชาญพิเศษ">เชี่ยวชาญพิเศษ</option>
+					</select>
+				</div>
+
+				<button class="btn btn-success pull-right" ng-click="addEmployee($event)">บันทึก</button>
+			</form>
+		</div>
+	</div><!-- /.row -->
+
+</div><!-- /.container -->

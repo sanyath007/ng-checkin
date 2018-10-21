@@ -1,4 +1,4 @@
-app.controller('FormController', function ($scope, CONFIG, employeeService, videoService, checkinService) {
+app.controller('CheckinController', function ($scope, CONFIG, employeeService, videoService, checkinService) {
 	$scope.pageTitle = "ลงเวลาปฏิบัติงาน ประจำวันที่ " + moment().format('DD/MM/YYYY');
 	$scope.onCamera = false;
 	$scope.uploadImage = [];
@@ -47,15 +47,16 @@ app.controller('FormController', function ($scope, CONFIG, employeeService, vide
 		
 		$scope.timeinImg = moment().format('DDMMYYHHmmss'); //set image name
 
-		if($scope.cid = '' || !$scope.onCamera){
-			toastr.error('Please input your CID and on the camera !!!');
+		if($scope.cid === '' || !$scope.onCamera){
+			toastr.error('กรุณาระบุเลข 13 หลัก และ เปิดกล้องก่อน !!!');
 		} else {
 			employeeService.getEmployeeInfo($scope.cid)
 			.then(function (res) {
 				console.log(res);
-				$scope.employee = res.data.employee;
 
-				if ($scope.employee.cid) {
+				if (res.data.employee) {
+					$scope.employee = res.data.employee;
+					
 					checkinService.checkin({
 						emp_id: $scope.employee.cid,
 						checkin_date: moment().format('YYYY-MM-DD'),
@@ -69,13 +70,13 @@ app.controller('FormController', function ($scope, CONFIG, employeeService, vide
 					}, function (err) {
 						console.log(err);
 					});
+
+					/** Upload and show user checked in picture. */
+					$scope.showPic(true);
 				}
 			}, function (err) {
 				console.log(err);
 			});
-			
-			/** Upload and show user checked in picture. */
-			$scope.showPic(true);
 		}
 	};
 

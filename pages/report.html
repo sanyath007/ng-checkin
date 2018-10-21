@@ -1,13 +1,54 @@
-<div class="container">
+<div class="container" ng-controller="ReportController" data-ng-init="getCheckinData()">
+	
 	<ol class="breadcrumb">
 	  	<li><a href="#">หน้าหลัก</a></li>
 	  	<li class="active">รายงาน</li>
 	</ol>
 	
-	<div class="jumbotron text-center">
-	    <h1>Report Page</h1>
+	<div class="row">
+		<div class="col-md-12">
 
-	    <p>{{ pageTitle }}</p>
+			<form class="form-inline">
+				<div class="form-group">
+					<label>ประจำวันที่ : </label>
+					<input 	datetime-picker date-format="yyyy-MM-dd" date-only 
+							ng-model="employee.birthdate" 
+							class="form-control" />
+				</div>
+			</form><br>
 
-	</div>
-</div>
+			<div class="table-responsive">
+				<table class="table table-bordered">
+					<thead class="thead-dark">
+						<tr>
+							<th style="text-align: center; width: 4%;">ลำดับ</th>
+							<th style="text-align: center; width: 15%;">เลข 13 หลัก</th>
+							<th style="text-align: center;">ชื่อ-สกุล</th>
+							<th style="text-align: center; width: 20%;">วันที่</th>
+							<th style="text-align: center; width: 15%;">เวลาเข้า</th>
+							<th style="text-align: center; width: 5%;">คะแนน</th>
+							<th style="text-align: center; width: 5%;">รูป</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="(index, checkin) in checkins">
+							<td style="text-align: center;">{{ (index + 1) }}</td>
+							<td style="text-align: center;">{{ checkin.emp_id }}</td>
+							<td>{{ checkin.emp_name }}</td>
+							<td style="text-align: center;">{{ checkin.checkin_date }}</td>
+							<td style="text-align: center;">{{ checkin.timein }}</td>
+							<td style="text-align: center;">{{ checkin.timein_score }}</td>
+							<td style="text-align: center;">
+								<a ng-click="showCheckinPic(checkin.timein_img)" style="cursor: pointer;">
+									<i class="fa fa-camera"></i>
+								</a>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+
+		</div>
+	</div><!-- /.row -->
+
+</div><!-- /.container -->

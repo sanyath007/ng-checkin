@@ -4,9 +4,30 @@ app.service('employeeService', function($http) {
 		return $http.get('http://api.mnrh.com/employee/' + data);
 	};
 
-	this.getEmployeeList = function (data) {
-		// return $http.get('http://web2.mnrh.com/api/get_userinfo.php?cid=' + data);
-		return $http.get('http://api.mnrh.com/employee/' + data);
+	this.getEmployeeList = function () {
+		return $http.get('http://api.mnrh.com/employees');
+	};
+
+	this.addEmployee = function (data) {
+		return $http.post('http://api.mnrh.com/employee-add', JSON.stringify(data), {
+			transformRequest: angular.identity,
+			headers: {
+				'Content-Type': 'application/json'
+			}
+		});
+	};
+
+	this.delEmployee = function (data) {
+		return $http.delete('http://api.mnrh.com/employee-del/' + data, {
+			transformRequest: angular.identity,
+			headers: {
+				'Content-Type': 'application/json'
+			}
+		});
+	};
+
+	this.getPositionList = function () {
+		return $http.get('http://api.mnrh.com/positions');
 	};
 });
 
@@ -20,6 +41,10 @@ app.service('checkinService', function($http) {
 			}
 		});
 	};
+
+	this.getCheckinData = function () {
+		return $http.get('http://api.mnrh.com/checkin');
+	}
 
 	this.uploadPic = function (data) {
 		// return $http.post('http://web2.mnrh.com/api/upload_image.php', data, {

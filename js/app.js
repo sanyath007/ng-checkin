@@ -1,6 +1,6 @@
 'use strict';
 
-var app = angular.module('checkin', ['ngRoute', 'firebase'])
+var app = angular.module('checkin', ['ngRoute', 'firebase', 'angularjs-datetime-picker'])
 	.constant('CONFIG', { //Set constant CONFIG for app configuration
 	    'APP_NAME' : 'Time Checkin Service',
 	    'APP_VERSION' : '1.0.0',
@@ -16,10 +16,14 @@ var app = angular.module('checkin', ['ngRoute', 'firebase'])
 		})
 		.when('/checkin', {
 			templateUrl: 'pages/checkin.html',
-			controller: 'FormController'
+			controller: 'CheckinController'
 		})
 		.when('/employee', {
 			templateUrl: 'pages/employee.html',
+			controller: 'EmployeeController'
+		})
+		.when('/employee-form', {
+			templateUrl: 'pages/employee-form.html',
 			controller: 'EmployeeController'
 		})
 		.when('/report', {
@@ -46,7 +50,3 @@ var app = angular.module('checkin', ['ngRoute', 'firebase'])
 		console.log(CONFIG.BASE_URL);
 		$scope.pageTitle = "This is Home page.";
 	})
-	.controller('ReportController', function ($scope, CONFIG) {
-		console.log(CONFIG.BASE_URL);
-		$scope.pageTitle = "This is Report page.";
-	});

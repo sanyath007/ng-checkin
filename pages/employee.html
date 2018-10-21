@@ -1,35 +1,55 @@
-<div class="container" ng-controller="EmployeeController">
+<div class="container" ng-controller="EmployeeController" data-ng-init="getEmployees()">
+
 	<ol class="breadcrumb">
 	  	<li><a href="#">หน้าหลัก</a></li>
 	  	<li class="active">ข้อมูลบุคลากร</li>
 	</ol>
 
 	<div class="page-header">
-  		<h2>Empolyee Page <small>{{ pageTitle }}</small></h2>
+  		<h2>{{ pageHeader }} <small>{{ pageTitle }}</small></h2>
 	</div>
 
-	<!-- Firebase Data -->
 	<div class="row">
 		<div class="col-md-12">
 
-			<table class="table table-bordered">
-				<thead>
-					<tr>
-						<th>Name</th>
-						<th>Full Name</th>
-						<th>Address</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr ng-repeat="contact in contacts">
-						<td>{{ contact.name }}</td>
-						<td>{{ contact.fullName }}</td>
-						<td>{{ contact.address }}</td>
-					</tr>
-				</tbody>
-			</table>
+			<p><a ng-href="#!employee-form" class="btn btn-primary">เพิ่มบุคลากร</a></p>
+
+			<div class="table-responsive">
+				<table class="table table-bordered">
+					<thead class="thead-dark">
+						<tr>
+							<th style="text-align: center; width: 4%;">ลำดับ</th>
+							<th style="text-align: center; width: 15%;">เลข 13 หลัก</th>
+							<th style="text-align: center;">ชื่อ-สกุล</th>
+							<th style="text-align: center; width: 20%;">ตำแหน่ง</th>
+							<th style="text-align: center; width: 15%;">วันเกิด</th>
+							<th style="text-align: center; width: 5%;">เพศ</th>
+							<th style="text-align: center; width: 8%;">Actions</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="(index, employee) in employees">
+							<td style="text-align: center;">{{ (index + 1) }}</td>
+							<td style="text-align: center;">{{ employee.emp_id }}</td>
+							<td>{{ employee.prefix + employee.emp_fname + " " + employee.emp_lname }}</td>
+							<td>{{ employee.position_name }}</td>
+							<td style="text-align: center;">{{ employee.birthdate }}</td>
+							<td style="text-align: center;">{{ employee.sex }}</td>
+							<td style="text-align: center;">
+								<!-- {{ employee.emp_id }} -->
+								<a ng-click="editEmployee(employee.emp_id)" class="btn btn-warning btn-sm">
+									<i class="fa fa-edit"></i>
+								</a>
+								<a ng-click="delEmployee(employee.emp_id)" class="btn btn-danger btn-sm">
+									<i class="fa fa-trash"></i>
+								</a>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
 
 		</div>
-	</div>
-	<!-- Firebase Data -->
-</div>
+	</div><!-- /.row -->
+
+</div><!-- /.container -->
