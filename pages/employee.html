@@ -1,0 +1,35 @@
+<div class="container" ng-controller="EmployeeController">
+	<ol class="breadcrumb">
+	  	<li><a href="#">หน้าหลัก</a></li>
+	  	<li class="active">ข้อมูลบุคลากร</li>
+	</ol>
+
+	<div class="page-header">
+  		<h2>Empolyee Page <small>{{ pageTitle }}</small></h2>
+	</div>
+
+	<!-- Firebase Data -->
+	<div class="row">
+		<div class="col-md-12">
+
+			<table class="table table-bordered">
+				<thead>
+					<tr>
+						<th>Name</th>
+						<th>Full Name</th>
+						<th>Address</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="contact in contacts">
+						<td>{{ contact.name }}</td>
+						<td>{{ contact.fullName }}</td>
+						<td>{{ contact.address }}</td>
+					</tr>
+				</tbody>
+			</table>
+
+		</div>
+	</div>
+	<!-- Firebase Data -->
+</div>
