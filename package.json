@@ -5,7 +5,9 @@
   "main": "index.js",
   "dependencies": {
     "angular": "^1.7.4",
+    "angular-animate": "^1.7.5",
     "angular-route": "^1.7.5",
+    "angular-sanitize": "^1.7.5",
     "angularfire": "^2.3.0",
     "angularjs-datetime-picker": "^0.1.16",
     "bootstrap": "^3.3.7",

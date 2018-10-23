@@ -1,6 +1,6 @@
-app.controller('EmployeeController', function ($scope, CONFIG, employeeService, fireAuthService, $firebase, $firebaseObject) {
+app.controller('EmployeeController', function ($scope, $location, CONFIG, employeeService, fireAuthService, $firebase, $firebaseObject) {
 	console.log(CONFIG.BASE_URL);
-	$scope.pageHeader = "ข้อมูลบุคลากร";
+	$scope.pageHeader = ($location.url() === '/employee-form') ? "เพิ่มบุคลากร" : "ข้อมูลบุคลากร";
 	$scope.pageTitle = "";
 	$scope.employee = {
 		cid: '',
@@ -87,15 +87,54 @@ app.controller('EmployeeController', function ($scope, CONFIG, employeeService, 
 		} else {
 			toastr.warning('กรุณาระบุเลข 13 หลักก่อน !!!');
 		}
-	}
+	};
 
-	$scope.editEmployee = function (id) {
-		console.log(id);
-	}
+	$scope.editEmployee = function (cid) {
+		console.log(cid);
+		$location.path('employee-edit').search({cid: cid}); // redirect to edit form with cid.
+	};
 
-	$scope.delEmployee = function (id) {
-		if (confirm("คุณต้องการลบข้อมูลบุคลากรที่มีเลข 13 หลักเท่ากับ " +id+ " ใช่หรือไม่!")) {
-			employeeService.delEmployee(id)
+	$scope.getEmployee = function () {
+		$scope.pageHeader = "แก้ไขข้อมูลบุคลากร";
+		var qs_params = $location.search();
+		console.log(qs_params);
+
+		employeeService.getEmployee(qs_params.cid)
+		.then(function (res) {
+			console.log(res);
+			$scope.employee = {
+				cid: res.data.employee.emp_id,
+				prefix: res.data.employee.prefix,
+				fname: res.data.employee.emp_fname,
+				lname: res.data.employee.emp_lname,
+				birthdate: res.data.employee.birthdate,
+				sex: res.data.employee.sex,
+				position: res.data.employee.position_id,
+				level: res.data.employee.position_level
+			};
+		}, function (err) {
+			console.log(err);
+		});
+	};
+
+	$scope.updateEmployee = function (event) {
+		if (confirm("คุณต้องการแก้ไขข้อมูลบุคลากรรหัส " +$scope.employee.cid+ " ใช่หรือไม่!")) {
+			employeeService.updateEmployee($scope.employee.cid, $scope.employee)
+			.then(function (res) {
+				console.log(res);
+				toastr.success('แก้ไขข้อมูลบุคลากรเรียบร้อย');
+
+				$location.path('employee'); // Redirect to employee list.
+			}, function (err) {
+				console.log(err);
+				toastr.error('ไม่สามารถแก้ไขข้อมูลได้ !!!');
+			});
+		}
+	};
+
+	$scope.delEmployee = function (cid) {
+		if (confirm("คุณต้องการลบข้อมูลบุคลากรรหัส " +cid+ " ใช่หรือไม่!")) {
+			employeeService.delEmployee(cid)
 			.then(function (res) {
 				console.log(res);
 				toastr.success('ลบข้อมูลบุคลากรเรียบร้อย');
@@ -106,5 +145,5 @@ app.controller('EmployeeController', function ($scope, CONFIG, employeeService, 
 				toastr.error('ไม่สามารถลบข้อมูลได้ !!!');
 			});
 		}
-	}
+	};
 })

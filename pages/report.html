@@ -1,4 +1,4 @@
-<div class="container" ng-controller="ReportController" data-ng-init="getCheckinData()">
+<div class="container" ng-controller="ReportController as pc" data-ng-init="getCheckinData(checkinDate)">
 	
 	<ol class="breadcrumb">
 	  	<li><a href="#">หน้าหลัก</a></li>
@@ -12,7 +12,7 @@
 				<div class="form-group">
 					<label>ประจำวันที่ : </label>
 					<input 	datetime-picker date-format="yyyy-MM-dd" date-only 
-							ng-model="employee.birthdate" 
+							ng-model="checkinDate"
 							class="form-control" />
 				</div>
 			</form><br>
@@ -39,7 +39,7 @@
 							<td style="text-align: center;">{{ checkin.timein }}</td>
 							<td style="text-align: center;">{{ checkin.timein_score }}</td>
 							<td style="text-align: center;">
-								<a ng-click="showCheckinPic(checkin.timein_img)" style="cursor: pointer;">
+								<a ng-click="pc.open(sm, checkin.timein_img)" style="cursor: pointer;">
 									<i class="fa fa-camera"></i>
 								</a>
 							</td>
