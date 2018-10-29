@@ -45,7 +45,7 @@ app.controller('CheckinController', function ($scope, CONFIG, employeeService, v
 	$scope.checkin = function (event) {
 		event.preventDefault();
 		
-		$scope.timeinImg = moment().format('DDMMYYHHmmss'); //set image name
+		$scope.timeinImg = moment().format('YYYYMMDDHHmmss'); //set image name
 
 		if($scope.cid === '' || !$scope.onCamera){
 			toastr.error('กรุณาระบุเลข 13 หลัก และ เปิดกล้องก่อน !!!');
@@ -83,7 +83,7 @@ app.controller('CheckinController', function ($scope, CONFIG, employeeService, v
 	$scope.showPic = function (withUpload) {
 		/** Draw image on canvas. and Create data URL containing a representation of image */
 		$scope.uploadImage = checkinService.drawOnCanvas(document.createElement("canvas"), camera);
-
+		
 		/** Display blob to image element */
 		img.src = window.URL.createObjectURL(checkinService.dataURItoBlob($scope.uploadImage));
 

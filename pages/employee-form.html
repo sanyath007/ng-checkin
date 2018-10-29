@@ -12,46 +12,73 @@
 
 	<div class="row">
 		<div class="col-md-12">
-			<form>
-				<div class="form-group">
-					<label>เลข 13 หลัก</label>
-					<input type="text" ng-model="employee.cid" class="form-control">
+			<form name="frmNewEmployee">
+				<div class="form-group" ng-class="{ 'has-error' : frmNewEmployee.cid.$invalid}">
+					<label class="control-label">เลขบัตรประชาชน</label>
+					<input type="text" name="cid" ng-model="employee.cid" class="form-control" required ng-minlength="13">
+					<div class="help-block" ng-show="frmNewEmployee.cid.$error.required">
+						This field is required.
+					</div>
+					<div class="help-block" ng-show="frmNewEmployee.cid.$error.minlength">
+						กรุณากรอกเลขบัตรประชาชนให้ครบ 13 หลัก
+					</div>
 				</div>
-				<div class="form-group">
-					<label>คำนำหน้า</label>
-					<input type="text" ng-model="employee.prefix" class="form-control">
+				<div class="form-group" ng-class="{ 'has-error' : frmNewEmployee.prefix.$invalid}">
+					<label class="control-label">คำนำหน้า</label>
+					<input type="text" name="prefix" ng-model="employee.prefix" class="form-control" required>
+					<div class="help-block" ng-show="frmNewEmployee.prefix.$error.required">
+						This field is required.
+					</div>
 				</div>
-				<div class="form-group">
-					<label>ชื่อ</label>
-					<input type="text" ng-model="employee.fname" class="form-control">
+				<div class="form-group" ng-class="{ 'has-error' : frmNewEmployee.fname.$invalid}">
+					<label class="control-label">ชื่อ</label>
+					<input type="text" name="fname" ng-model="employee.fname" class="form-control" required>
+					<div class="help-block" ng-show="frmNewEmployee.fname.$error.required">
+						This field is required.
+					</div>
 				</div>
-				<div class="form-group">
-					<label>สกุล</label>
-					<input type="text" ng-model="employee.lname" class="form-control">
+				<div class="form-group" ng-class="{ 'has-error' : frmNewEmployee.lname.$invalid}">
+					<label class="control-label">สกุล</label>
+					<input type="text" name="lname" ng-model="employee.lname" class="form-control" required>
+					<div class="help-block" ng-show="frmNewEmployee.lname.$error.required">
+						This field is required.
+					</div>
 				</div>
-				<div class="form-group">
-					<label>วันเกิด</label>
-					<input 	datetime-picker date-format="yyyy-MM-dd" date-only 
+				<div class="form-group" ng-class="{ 'has-error' : frmNewEmployee.birthdate.$untouched || frmNewEmployee.birthdate.$error.required}">
+					<label class="control-label">วันเกิด</label>
+					<input 	datetime-picker date-format="yyyy-MM-dd" date-only
+							name="birthdate" 
 							ng-model="employee.birthdate" 
-							class="form-control" />
+							class="form-control"
+							required />
+					<div class="help-block" ng-show="frmNewEmployee.birthdate.$untouched || frmNewEmployee.birthdate.$error.required">
+						This field is required.
+					</div>
 				</div>
-				<div class="form-group">
-					<label>เพศ</label>
-					<input type="radio" value="1" ng-model="employee.sex"> ชาย
-					<input type="radio" value="2" ng-model="employee.sex"> หญิง
+				<div class="form-group" ng-class="{ 'has-error' : frmNewEmployee.male.$pristine && frmNewEmployee.female.$pristine}">
+					<label class="control-label">เพศ</label>
+					<input type="radio" name="male" value="1" ng-model="employee.sex" ng-required="!employee.sex"> ชาย
+					<input type="radio" name="female" value="2" ng-model="employee.sex" ng-required="!employee.sex"> หญิง
+					<div class="help-block" ng-show="frmNewEmployee.male.$pristine && frmNewEmployee.female.$pristine">
+						This field is required.
+					</div>
 				</div>
-				<div class="form-group">
-					<label>ตำแหน่ง</label>
-					<select class="form-control" ng-model="employee.position">
+				<div class="form-group" ng-class="{'has-error' : !employee.position}">
+					<label class="control-label">ตำแหน่ง</label>
+					<select name="position" class="form-control" ng-model="employee.position" required>
+						<option value="" ng-selected="!employee.position">-- Please Select --</option>
 						<option ng-selected="position.id == employee.position" 
 								ng-repeat="position in positions" 
 								ng-value="position.id">
 							{{ position.position_name }}
 						</option>
 					</select>
+					<div class="help-block" ng-show="!employee.position">
+						This field is required.
+					</div>
 				</div>
 				<div class="form-group">
-					<label>ระดับตำแหน่ง</label>
+					<label class="control-label">ระดับตำแหน่ง</label>
 					<select class="form-control" ng-model="employee.level">
 						<option value="">ไม่ระบุ</option>
 						<option value="ปฏิบัติงาน">ปฏิบัติงาน</option>
@@ -64,7 +91,7 @@
 					</select>
 				</div>
 
-				<button class="btn btn-success pull-right" ng-click="addEmployee($event)">บันทึก</button>
+				<button class="btn btn-success pull-right" ng-click="addEmployee($event, frmNewEmployee)">บันทึก</button>
 			</form>
 		</div>
 	</div><!-- /.row -->

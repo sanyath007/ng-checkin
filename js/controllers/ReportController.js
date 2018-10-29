@@ -1,4 +1,4 @@
-app.controller('ReportController', function ($scope,CONFIG,checkinService,$uibModal,$log) {
+app.controller('ReportController', function ($scope,$http,CONFIG,checkinService,$uibModal,$log) {
 	console.log(CONFIG.BASE_URL);
 	$scope.pageHeader = "ข้อมูลบุคลากร";
 	$scope.pageTitle = "";
@@ -25,9 +25,8 @@ app.controller('ReportController', function ($scope,CONFIG,checkinService,$uibMo
 	pc.data = "";
 
 	pc.open = function (size, fileName) {
-		console.log(pc);
-
 		pc.data = "http://api.mnrh.com/uploads/" + fileName;
+
 	    var modalInstance = $uibModal.open({
 	      	animation: true,
 	      	ariaLabelledBy: 'modal-title',
@@ -42,9 +41,5 @@ app.controller('ReportController', function ($scope,CONFIG,checkinService,$uibMo
 		        }
 	      	}
 	    });
-
-	    // modalInstance.result.then(function () {
-	    //   	alert("now I'll close the modal");
-	    // });
   	};
 });

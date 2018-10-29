@@ -9,7 +9,7 @@ app.controller('EmployeeController', function ($scope, $location, CONFIG, employ
 		lname: '',
 		birthdate: '',
 		sex: '',
-		position: '2',
+		position: '',
 		level: ''
 	};
 	$scope.employees = [];
@@ -60,33 +60,34 @@ app.controller('EmployeeController', function ($scope, $location, CONFIG, employ
 		});
 	};
 
-	$scope.addEmployee = function (event) {
+	$scope.addEmployee = function (event, form) {
 		event.preventDefault();
 		console.log($scope.employee);
 
-		if ($scope.employee.cid !== '') {
-			employeeService.addEmployee($scope.employee)
-			.then(function (res) {
-				console.log(res);
-				toastr.success('บันทึกข้อมูลบุคลากรเรียบร้อย');
-
-				$scope.employee = {
-					cid: '',
-					prefix: '',
-					fname: '',
-					lname: '',
-					birthdate: '',
-					sex: '',
-					position: '2',
-					level: ''
-				};
-			}, function (err) {
-				console.log(err);
-				toastr.error('ไม่สามารถเพิ่มข้อมูลได้ !!!');
-			});
-		} else {
-			toastr.warning('กรุณาระบุเลข 13 หลักก่อน !!!');
+		if (form.$invalid) {
+			toastr.warning('กรุณาข้อมูลให้ครบก่อน !!!');
+			return;
 		}
+
+		// employeeService.addEmployee($scope.employee)
+		// .then(function (res) {
+		// 	console.log(res);
+		// 	toastr.success('บันทึกข้อมูลบุคลากรเรียบร้อย');
+
+		// 	$scope.employee = {
+		// 		cid: '',
+		// 		prefix: '',
+		// 		fname: '',
+		// 		lname: '',
+		// 		birthdate: '',
+		// 		sex: '',
+		// 		position: '2',
+		// 		level: ''
+		// 	};
+		// }, function (err) {
+		// 	console.log(err);
+		// 	toastr.error('ไม่สามารถเพิ่มข้อมูลได้ !!!');
+		// });
 	};
 
 	$scope.editEmployee = function (cid) {
