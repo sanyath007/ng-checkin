@@ -17,7 +17,7 @@
 					<label class="control-label">เลขบัตรประชาชน</label>
 					<input type="text" name="cid" ng-model="employee.cid" class="form-control" required ng-minlength="13">
 					<div class="help-block" ng-show="frmNewEmployee.cid.$error.required">
-						This field is required.
+						กรุณากรอกเลขบัตรประชาชนก่อน
 					</div>
 					<div class="help-block" ng-show="frmNewEmployee.cid.$error.minlength">
 						กรุณากรอกเลขบัตรประชาชนให้ครบ 13 หลัก
@@ -27,21 +27,21 @@
 					<label class="control-label">คำนำหน้า</label>
 					<input type="text" name="prefix" ng-model="employee.prefix" class="form-control" required>
 					<div class="help-block" ng-show="frmNewEmployee.prefix.$error.required">
-						This field is required.
+						กรุณากรอกคำนำหน้าก่อน
 					</div>
 				</div>
 				<div class="form-group" ng-class="{ 'has-error' : frmNewEmployee.fname.$invalid}">
 					<label class="control-label">ชื่อ</label>
 					<input type="text" name="fname" ng-model="employee.fname" class="form-control" required>
 					<div class="help-block" ng-show="frmNewEmployee.fname.$error.required">
-						This field is required.
+						กรุณากรอกชื่อก่อน
 					</div>
 				</div>
 				<div class="form-group" ng-class="{ 'has-error' : frmNewEmployee.lname.$invalid}">
 					<label class="control-label">สกุล</label>
 					<input type="text" name="lname" ng-model="employee.lname" class="form-control" required>
 					<div class="help-block" ng-show="frmNewEmployee.lname.$error.required">
-						This field is required.
+						กรุณากรอกนามสกุลก่อน
 					</div>
 				</div>
 				<div class="form-group" ng-class="{ 'has-error' : frmNewEmployee.birthdate.$untouched || frmNewEmployee.birthdate.$error.required}">
@@ -52,7 +52,7 @@
 							class="form-control"
 							required />
 					<div class="help-block" ng-show="frmNewEmployee.birthdate.$untouched || frmNewEmployee.birthdate.$error.required">
-						This field is required.
+						กรุณากรอกวันเกิดก่อน
 					</div>
 				</div>
 				<div class="form-group" ng-class="{ 'has-error' : frmNewEmployee.male.$pristine && frmNewEmployee.female.$pristine}">
@@ -60,7 +60,7 @@
 					<input type="radio" name="male" value="1" ng-model="employee.sex" ng-required="!employee.sex"> ชาย
 					<input type="radio" name="female" value="2" ng-model="employee.sex" ng-required="!employee.sex"> หญิง
 					<div class="help-block" ng-show="frmNewEmployee.male.$pristine && frmNewEmployee.female.$pristine">
-						This field is required.
+						กรุณาเลือกเพศก่อน
 					</div>
 				</div>
 				<div class="form-group" ng-class="{'has-error' : !employee.position}">
@@ -74,7 +74,7 @@
 						</option>
 					</select>
 					<div class="help-block" ng-show="!employee.position">
-						This field is required.
+						กรุณาเลือกตำแหน่งก่อน
 					</div>
 				</div>
 				<div class="form-group">
