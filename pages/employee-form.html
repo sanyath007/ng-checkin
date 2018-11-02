@@ -44,16 +44,15 @@
 						กรุณากรอกนามสกุลก่อน
 					</div>
 				</div>
-				<div class="form-group" ng-class="{ 'has-error' : frmNewEmployee.birthdate.$untouched || frmNewEmployee.birthdate.$error.required}">
+				<div class="form-group">
 					<label class="control-label">วันเกิด</label>
 					<input 	datetime-picker date-format="yyyy-MM-dd" date-only
 							name="birthdate" 
 							ng-model="employee.birthdate" 
-							class="form-control"
-							required />
-					<div class="help-block" ng-show="frmNewEmployee.birthdate.$untouched || frmNewEmployee.birthdate.$error.required">
+							class="form-control" />
+					<!-- <div class="help-block" ng-show="frmNewEmployee.birthdate.$untouched || frmNewEmployee.birthdate.$error.required">
 						กรุณากรอกวันเกิดก่อน
-					</div>
+					</div> -->
 				</div>
 				<div class="form-group" ng-class="{ 'has-error' : frmNewEmployee.male.$pristine && frmNewEmployee.female.$pristine}">
 					<label class="control-label">เพศ</label>

@@ -32,9 +32,9 @@
 							<td style="text-align: center;">{{ (index + 1) }}</td>
 							<td style="text-align: center;">{{ employee.emp_id }}</td>
 							<td>{{ employee.prefix + employee.emp_fname + " " + employee.emp_lname }}</td>
-							<td>{{ employee.position_name + employee.position_level }}</td>
+							<td>{{ employee.position_name }}{{ (!employee.position_level) ? '' : employee.position_level }}</td>
 							<td style="text-align: center;">{{ employee.birthdate }}</td>
-							<td style="text-align: center;">{{ employee.sex }}</td>
+							<td style="text-align: center;">{{ (employee.sex == 1) ? 'ชาย' : 'หญิง' }}</td>
 							<td style="text-align: center;">
 								<!-- {{ employee.emp_id }} -->
 								<a ng-click="editEmployee(employee.emp_id)" class="btn btn-warning btn-sm">

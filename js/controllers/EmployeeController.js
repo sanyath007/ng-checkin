@@ -69,25 +69,25 @@ app.controller('EmployeeController', function ($scope, $location, CONFIG, employ
 			return;
 		}
 
-		// employeeService.addEmployee($scope.employee)
-		// .then(function (res) {
-		// 	console.log(res);
-		// 	toastr.success('บันทึกข้อมูลบุคลากรเรียบร้อย');
+		employeeService.addEmployee($scope.employee)
+		.then(function (res) {
+			console.log(res);
+			toastr.success('บันทึกข้อมูลบุคลากรเรียบร้อย');
 
-		// 	$scope.employee = {
-		// 		cid: '',
-		// 		prefix: '',
-		// 		fname: '',
-		// 		lname: '',
-		// 		birthdate: '',
-		// 		sex: '',
-		// 		position: '2',
-		// 		level: ''
-		// 	};
-		// }, function (err) {
-		// 	console.log(err);
-		// 	toastr.error('ไม่สามารถเพิ่มข้อมูลได้ !!!');
-		// });
+			$scope.employee = {
+				cid: '',
+				prefix: '',
+				fname: '',
+				lname: '',
+				birthdate: '',
+				sex: '',
+				position: '',
+				level: ''
+			};
+		}, function (err) {
+			console.log(err);
+			toastr.error('ไม่สามารถเพิ่มข้อมูลได้ !!!');
+		});
 	};
 
 	$scope.editEmployee = function (cid) {
@@ -124,18 +124,18 @@ app.controller('EmployeeController', function ($scope, $location, CONFIG, employ
 			return;
 		}
 
-		// if (confirm("คุณต้องการแก้ไขข้อมูลบุคลากรรหัส " +$scope.employee.cid+ " ใช่หรือไม่!")) {
-		// 	employeeService.updateEmployee($scope.employee.cid, $scope.employee)
-		// 	.then(function (res) {
-		// 		console.log(res);
-		// 		toastr.success('แก้ไขข้อมูลบุคลากรเรียบร้อย');
+		if (confirm("คุณต้องการแก้ไขข้อมูลบุคลากรรหัส " +$scope.employee.cid+ " ใช่หรือไม่!")) {
+			employeeService.updateEmployee($scope.employee.cid, $scope.employee)
+			.then(function (res) {
+				console.log(res);
+				toastr.success('แก้ไขข้อมูลบุคลากรเรียบร้อย');
 
-		// 		$location.path('employee'); // Redirect to employee list.
-		// 	}, function (err) {
-		// 		console.log(err);
-		// 		toastr.error('ไม่สามารถแก้ไขข้อมูลได้ !!!');
-		// 	});
-		// }
+				$location.path('employee'); // Redirect to employee list.
+			}, function (err) {
+				console.log(err);
+				toastr.error('ไม่สามารถแก้ไขข้อมูลได้ !!!');
+			});
+		}
 	};
 
 	$scope.delEmployee = function (cid) {

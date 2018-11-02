@@ -59,6 +59,10 @@ app.service('checkinService', function($http) {
 		return $http.get('http://api.mnrh.com/checkin/' + date);
 	}
 
+	this.getCheckinPie = function (date) {
+		return $http.get('http://api.mnrh.com/checkin-chart/' + date);
+	}
+
 	this.uploadPic = function (data) {
 		// return $http.post('http://web2.mnrh.com/api/upload_image.php', data, {
 		return $http.post('http://api.mnrh.com/upload', data, {
