@@ -1,8 +1,8 @@
-<div class="container" ng-controller="ReportController as pc" data-ng-init="getCheckinData(checkinDate); getCheckinPie(checkinDate)">
+<div class="container" ng-controller="ReportController as pc" data-ng-init="getCheckinData(checkinMonth)">
 	
 	<ol class="breadcrumb">
 	  	<li><a href="#">หน้าหลัก</a></li>
-	  	<li class="active">รายงาน</li>
+	  	<li class="active">รายการการลงเวลาปฏิบัติงานรายเดือน</li>
 	</ol>
 	
 	<div class="row">
@@ -10,25 +10,26 @@
 
 			<form class="form-inline">
 				<div class="form-group">
-					<label>ประจำวันที่ : </label>
-					<input 	datetime-picker date-format="yyyy-MM-dd" date-only 
-							ng-model="checkinDate"
+					<label>ประจำเดือน : </label>
+					<input 	datetime-picker date-format="yyyy-MM" date-only 
+							ng-model="checkinMonth"
 							class="form-control" />
+					<button class="btn btn-primary" ng-click="getCheckinData(checkinMonth)">แสดง</button>
 				</div>
 			</form><br>
 
-			<div id="pieContainer" style="width: 800px; height: 400px; margin: 0 auto; margin-top: 20px;"></div>
+			<!-- <div id="pieContainer" style="width: 800px; height: 400px; margin: 0 auto; margin-top: 20px;"></div> -->
 			
 			<div class="table-responsive">
-				<table class="table table-bordered">
+				<table class="table table-bordered" id="checkinData">
 					<thead class="thead-dark">
 						<tr>
 							<th style="text-align: center; width: 4%;">ลำดับ</th>
 							<th style="text-align: center; width: 15%;">เลข 13 หลัก</th>
 							<th style="text-align: center;">ชื่อ-สกุล</th>
-							<th style="text-align: center; width: 20%;">วันที่</th>
-							<th style="text-align: center; width: 15%;">เวลาเข้า</th>
-							<th style="text-align: center; width: 5%;">คะแนน</th>
+							<th style="text-align: center; width: 10%;">วันที่</th>
+							<th style="text-align: center; width: 10%;">เวลาเข้า</th>
+							<th style="text-align: center; width: 10%;">คะแนน</th>
 							<th style="text-align: center; width: 5%;">รูป</th>
 						</tr>
 					</thead>
@@ -50,6 +51,11 @@
 				</table>
 			</div>
 
+			<div class="row">
+				<div class="col-md-12" style="text-align: center;">
+					<button ng-click="exportToExcel('#checkinData')" class="btn btn-success">Excel</button>
+				</div>
+			</div>
 		</div>
 	</div><!-- /.row -->
 

@@ -1,26 +1,38 @@
-app.controller('ReportController', function ($scope,$http,CONFIG,checkinService,$uibModal,$log) {
+app.controller('ReportController', function ($scope,$http,CONFIG,checkinService,$uibModal,$log,ExcelService,$timeout) {
 	console.log(CONFIG.BASE_URL);
 	$scope.pageHeader = "ข้อมูลบุคลากร";
 	$scope.pageTitle = "";
 
 	$scope.checkins = [];
 	$scope.checkinImg = '';
-	$scope.checkinDate = moment().format('YYYY-MM-DD');
+    $scope.checkinDate = moment().format('YYYY-MM-DD');
+	$scope.checkinMonth = moment().format('YYYY-MM');
 
-	$scope.$watch("checkinDate", function(newValue, oldValue) {
-        $scope.getCheckinData($scope.checkinDate);
-    	$scope.getCheckinPie($scope.checkinDate);
-	});
+	// $scope.$watch("checkinDate", function(newValue, oldValue) {
+ //        $scope.getCheckinDate($scope.checkinDate);
+ //    	$scope.getCheckinPie($scope.checkinDate);
+	// });
 
-	$scope.getCheckinData = function (date) {
-		checkinService.getCheckinData(date)
-		.then(function (res) {
-			console.log(res);
-			$scope.checkins = res.data.checkins;
-		}, function (err) {
-			console.log(err);
-		});
-	};
+	$scope.getCheckinDate = function (date) {
+        console.log(date);
+        checkinService.getCheckinDate(date)
+        .then(function (res) {
+            console.log(res);
+            $scope.checkins = res.data.checkins;
+        }, function (err) {
+            console.log(err);
+        });
+    };
+
+    $scope.getCheckinData = function (month) {        
+        checkinService.getCheckinData(month)
+        .then(function (res) {
+            console.log(res);
+            $scope.checkins = res.data.checkins;
+        }, function (err) {
+            console.log(err);
+        });
+    };
 
 	var pc = this;
 	pc.data = "";
@@ -111,4 +123,11 @@ app.controller('ReportController', function ($scope,$http,CONFIG,checkinService,
             console.log(err);
         });
     };
+
+    $scope.exportToExcel = function (tableId) {
+        var exportHref = ExcelService.tableToExcel(tableId, 'WireWorkbenchDataExport');
+        $timeout(function() {
+            location.href = exportHref;
+        },100); // trigger download
+    }
 });

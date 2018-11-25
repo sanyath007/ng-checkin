@@ -32,8 +32,12 @@ var app = angular.module('checkin', ['ngRoute','ngAnimate','ngSanitize','firebas
 			templateUrl: 'pages/employee-edit.html',
 			controller: 'EmployeeController'
 		})
-		.when('/report', {
-			templateUrl: 'pages/report.html',
+		.when('/report1', {
+			templateUrl: 'pages/report1.html',
+			controller: 'ReportController'
+		})
+		.when('/report2', {
+			templateUrl: 'pages/report2.html',
 			controller: 'ReportController'
 		})
 		.otherwise({
