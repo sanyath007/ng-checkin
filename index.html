@@ -1,18 +1,19 @@
 <!DOCTYPE html>
 <html>
-<head>
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<!-- <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">  -->
-	<title>Time Checkin System</title>
-	<!-- CSS Bootstrap -->
-	<link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
-	<!-- CSS Social Icon Strip Footer -->
-	<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
-	<!-- CSS other -->
-	<link rel="stylesheet" href="node_modules/pretty-checkbox/dist/pretty-checkbox.min.css">
-	<link rel="stylesheet" href="node_modules/toastr/build/toastr.css">
-	<link rel="stylesheet" href="node_modules/angularjs-datetime-picker/angularjs-datetime-picker.css" />
+	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<!-- <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">  -->
+		<title>Time Checkin System</title>
+		<!-- CSS Bootstrap -->
+		<link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
+		<!-- CSS Social Icon Strip Footer -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
+		<!-- CSS other -->
+		<link rel="stylesheet" href="node_modules/pretty-checkbox/dist/pretty-checkbox.min.css">
+		<link rel="stylesheet" href="node_modules/toastr/build/toastr.css">
+		<link rel="stylesheet" href="node_modules/angularjs-datetime-picker/angularjs-datetime-picker.css" />
+		<link rel="stylesheet" href="./node_modules/angular-moment-picker/dist/angular-moment-picker.min.css">
 	
 	<style type="text/css">
 		#footer {
@@ -32,7 +33,7 @@
 	<script type="text/javascript" src="node_modules/angular/angular.min.js"></script>
 	<script type="text/javascript" src="node_modules/angular-animate/angular-animate.min.js"></script>
 	<script type="text/javascript" src="node_modules/angular-sanitize/angular-sanitize.min.js"></script>
-    <script type="text/javascript" src="node_modules/angular-route/angular-route.min.js"></script>
+  <script type="text/javascript" src="node_modules/angular-route/angular-route.min.js"></script>
 	<script type="text/javascript" src="node_modules/angularfire/dist/angularfire.min.js"></script>
 	<script src="https://www.gstatic.com/firebasejs/5.5.4/firebase-app.js"></script>
 	<script src="https://www.gstatic.com/firebasejs/5.5.4/firebase-auth.js"></script>
@@ -44,6 +45,8 @@
 	<script type="text/javascript" src="node_modules/moment/moment.js"></script>
 	<script type="text/javascript" src="node_modules/underscore/underscore-min.js"></script>
 	<script type="text/javascript" src="node_modules/toastr/build/toastr.min.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment-with-locales.js"></script>
+	<script src="./node_modules/angular-moment-picker/dist/angular-moment-picker.min.js"></script>
 	
 	<script src="https://code.highcharts.com/highcharts.js"></script>
 	<script src="http://code.highcharts.com/highcharts-more.js"></script>
@@ -82,8 +85,11 @@
 		      	<li class="dropdown">
 			        <a class="dropdown-toggle" data-toggle="dropdown">รายงาน <span class="caret"></span></a>
 			        <ul class="dropdown-menu">
-			          	<li><a ng-href="#!report1">การลงเวลาปฏิบัติงานรายวัน</a></li>
-			          	<li><a ng-href="#!report2">การลงเวลาปฏิบัติงานรายเดือน</a></li>
+			          	<li><a ng-href="#!report1">รายการลงเวลาปฏิบัติงานรายวัน</a></li>
+									<li><a ng-href="#!report2">รายการลงเวลาปฏิบัติงานรายเดือน</a></li>
+									<li class="divider"></li>
+			          	<li><a ng-href="#!report3">รายงานคะแนนการลงเวลาปฏิบัติงาน</a></li>
+			          	<li><a ng-href="#!report4">รายงานเวลาการลงเวลาปฏิบัติงาน</a></li>
 			        </ul>
 		      	</li>
 		    </ul>

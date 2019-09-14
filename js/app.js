@@ -1,6 +1,16 @@
 'use strict';
 
-var app = angular.module('checkin', ['ngRoute','ngAnimate','ngSanitize','firebase','angularjs-datetime-picker','ui.bootstrap'])
+var app = angular.module('checkin', 
+	[
+		'ngRoute',
+		'ngAnimate',
+		'ngSanitize',
+		'firebase',
+		'angularjs-datetime-picker',
+		'ui.bootstrap',
+		'moment-picker'
+	]
+)
 	/** Set constant CONFIG for app configuration */
 	.constant('CONFIG', {
 	    'APP_NAME' : 'Time Checkin Service',
@@ -38,6 +48,14 @@ var app = angular.module('checkin', ['ngRoute','ngAnimate','ngSanitize','firebas
 		})
 		.when('/report2', {
 			templateUrl: 'pages/report2.html',
+			controller: 'ReportController'
+		})
+		.when('/report3', {
+			templateUrl: 'pages/report3.html',
+			controller: 'ReportController'
+		})
+		.when('/report4', {
+			templateUrl: 'pages/report4.html',
 			controller: 'ReportController'
 		})
 		.otherwise({

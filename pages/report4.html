@@ -1,0 +1,68 @@
+<div class="container-fluid" ng-controller="ReportController as pc" data-ng-init="getCheckinTime(checkinMonth)">
+	
+	<ol class="breadcrumb">
+	  	<li><a href="#">หน้าหลัก</a></li>
+	  	<li class="active">รายงานเวลาการลงเวลาปฏิบัติงาน</li>
+	</ol>
+	
+	<div class="row">
+		<div class="col-md-12">
+
+			<form class="form-inline">
+				<div class="form-group">
+					<label>ประจำเดือน : </label>
+					<input 
+						class="form-control"
+						ng-model="ctrl.input"
+						ng-model-options="{ updateOn: 'blur' }"
+						placeholder="Select a date..."
+						moment-picker="checkinMonth"
+						format="YYYY-MM"
+						locale="th"
+					/>
+					<!-- <input 
+						datetime-picker 
+						date-format="yyyy-MM" 
+						date-only 
+						ng-model="checkinMonth"
+						class="form-control" 
+					/> -->
+					<button class="btn btn-primary" ng-click="getCheckinTime(checkinMonth)">แสดง</button>
+				</div>
+			</form><br>
+
+			<div class="table-responsive">
+				<table class="table table-bordered" id="checkinData">
+					<thead class="thead-dark">
+						<tr>
+							<th style="text-align: center; width: 4%;" rowspan="2">ลำดับ</th>
+							<!-- <th style="text-align: center; width: 15%;" rowspan="2">เลข 13 หลัก</th> -->
+							<th style="text-align: center;" rowspan="2">ชื่อ-สกุล</th>
+              <th style="text-align: center;" colspan="31">วันที่</th>
+            </tr>
+            <tr>
+							<th ng-repeat="n in range" style="text-align: center; width: 5%;">{{ n }}</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="(index, checkin) in checkins">
+							<td style="text-align: center;">{{ (index + 1) }}</td>
+							<!-- <td style="text-align: center;">{{ checkin.empId }}</td> -->
+							<td>{{ checkin.emp_name }}</td>
+              <td ng-repeat="n in range" style="text-align: center;">
+                {{ checkin.timeins[n] }}
+              </td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+
+			<div class="row">
+				<div class="col-md-12" style="text-align: center;">
+					<button ng-click="exportToExcel('#checkinData')" class="btn btn-success">Excel</button>
+				</div>
+			</div>
+		</div>
+	</div><!-- /.row -->
+
+</div><!-- /.container -->

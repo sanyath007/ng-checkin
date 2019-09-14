@@ -63,6 +63,14 @@ app.service('checkinService', function($http) {
 		return $http.get('http://api.mnrh.com/checkin/' + date);
 	}
 
+	this.getCheckinScore = function (month) {
+		return $http.get('http://api.mnrh.com/checkin-score/' + month);
+	}
+
+	this.getCheckinTime = function (month) {
+		return $http.get('http://api.mnrh.com/checkin-time/' + month);
+	}
+
 	this.getCheckinPie = function (date) {
 		return $http.get('http://api.mnrh.com/checkin-chart/' + date);
 	}

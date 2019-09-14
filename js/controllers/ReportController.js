@@ -7,11 +7,7 @@ app.controller('ReportController', function ($scope,$http,CONFIG,checkinService,
 	$scope.checkinImg = '';
     $scope.checkinDate = moment().format('YYYY-MM-DD');
 	$scope.checkinMonth = moment().format('YYYY-MM');
-
-	// $scope.$watch("checkinDate", function(newValue, oldValue) {
- //        $scope.getCheckinDate($scope.checkinDate);
- //    	$scope.getCheckinPie($scope.checkinDate);
-	// });
+    $scope.range = _.range(1, 32);
 
 	$scope.getCheckinDate = function (date) {
         console.log(date);
@@ -33,6 +29,32 @@ app.controller('ReportController', function ($scope,$http,CONFIG,checkinService,
             console.log(err);
         });
     };
+
+    $scope.getCheckinScore = function (month) {        
+        checkinService.getCheckinScore(month)
+        .then(function (res) {
+            console.log(res);
+            $scope.checkins = res.data.checkins;
+            $scope.range = _.range(1, (parseInt(res.data.numdate) + 1));
+        }, function (err) {
+            console.log(err);
+        });
+    };
+
+    $scope.getCheckinTime = function (month) {
+        checkinService.getCheckinTime(month)
+        .then(function (res) {
+            console.log(res);
+            $scope.checkins = res.data.checkins;
+            $scope.range = _.range(1, (parseInt(res.data.numdate) + 1));
+        }, function (err) {
+            console.log(err);
+        });
+    };
+
+    function groupEmpScore(data) {
+        return [...new Set(data.map(d => d.emp_id ))];
+    }
 
 	var pc = this;
 	pc.data = "";

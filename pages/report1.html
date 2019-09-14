@@ -2,7 +2,7 @@
 	
 	<ol class="breadcrumb">
 	  	<li><a href="#">หน้าหลัก</a></li>
-	  	<li class="active">รายการการลงเวลาปฏิบัติงานรายวัน</li>
+	  	<li class="active">รายการลงเวลาปฏิบัติงานรายวัน</li>
 	</ol>
 	
 	<div class="row">
@@ -11,10 +11,29 @@
 			<form class="form-inline">
 				<div class="form-group">
 					<label>ประจำวันที่ : </label>
-					<input 	datetime-picker date-format="yyyy-MM-dd" date-only 
-							ng-model="checkinDate"
-							class="form-control" />
-					<button class="btn btn-primary" ng-click="getCheckinDate(checkinDate); getCheckinPie(checkinDate)">แสดง</button>
+					<input 
+						class="form-control"
+						ng-model="ctrl.input"
+						ng-model-options="{ updateOn: 'blur' }"
+						placeholder="Select a date..."
+						moment-picker="checkinDate"
+						start-view="month"
+						format="YYYY-MM-DD"
+						locale="th"
+					/>
+					<!-- <input 
+						datetime-picker 
+						date-format="yyyy-MM-dd" 
+						date-only 
+						ng-model="checkinDate"
+						class="form-control"
+					/> -->
+					<button
+						class="btn btn-primary"
+						ng-click="getCheckinDate(checkinDate); getCheckinPie(checkinDate)"
+					>
+						แสดง
+					</button>
 				</div>
 			</form><br>
 
